@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Leaflet needs a fixed height on the map container to render correctly */
+.map-container {
+  height: 500px;
+  width: 100%;
+  border-radius: 0.5rem;
+  z-index: 0;
+}
+
+/* Fix Leaflet marker icons that break with webpack */
+.leaflet-default-icon-path {
+  background-image: url("https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png");
+}
