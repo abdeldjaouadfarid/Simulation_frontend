@@ -58,7 +58,7 @@ function AnimalMap({ animals, geofence }) {
   }
 
   return (
-    <MapContainer center={mapCenter} zoom={14} style={{ height: '500px', width: '100%', borderRadius: '8px' }}>
+    <MapContainer center={mapCenter} zoom={10.5} style={{ height: '500px', width: '100%', borderRadius: '8px' }}>
 
       {/* The base map tiles from OpenStreetMap (free, no API key needed) */}
       <TileLayer
