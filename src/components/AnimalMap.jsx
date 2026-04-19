@@ -41,7 +41,7 @@ const orangeIcon = new L.Icon({
 
 function AnimalMap({ animals, geofence }) {
   // Center the map on Central Park, NYC
-  const mapCenter = [40.7812, -73.9665]
+  const mapCenter = [35.6650, 4.4300];
 
   // Convert the geofence GeoJSON coordinates into the [lat, lng] format that Leaflet expects.
   // GeoJSON stores coordinates as [longitude, latitude] but Leaflet needs [latitude, longitude].
