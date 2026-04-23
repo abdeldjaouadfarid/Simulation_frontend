@@ -1,85 +1,64 @@
-// components/AddAnimalForm.jsx
-// A simple form with 4 fields to add a new animal.
-// When submitted it calls the onAdd function passed from the parent.
-
 import { useState } from 'react'
 
+const inputStyle = {
+  background: 'var(--bg)',
+  border: '1px solid var(--border)',
+  color: 'var(--text)',
+  fontFamily: 'var(--mono)',
+  fontSize: '0.78rem',
+  padding: '8px 10px',
+  borderRadius: 3,
+  width: '100%',
+  outline: 'none',
+}
+const labelStyle = {
+  fontFamily: 'var(--mono)',
+  fontSize: '0.62rem',
+  letterSpacing: '0.1em',
+  color: 'var(--muted)',
+  marginBottom: 4,
+  display: 'block',
+}
+
 function AddAnimalForm({ onAdd }) {
-  // Store each form field in state
   const [name,      setName]      = useState('')
   const [species,   setSpecies]   = useState('')
   const [longitude, setLongitude] = useState('4.4300')
   const [latitude,  setLatitude]  = useState('35.6600')
 
   const handleSubmit = (e) => {
-    e.preventDefault() // stop the page from reloading
-
+    e.preventDefault()
     if (!name || !species) return
-
-    // Pass the form data up to the parent (App.jsx)
     onAdd({ name, species, longitude, latitude })
-
-    // Clear the name and species fields after submitting
     setName('')
     setSpecies('')
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-wrap gap-2 items-end mt-4">
-
-      <div className="flex flex-col">
-        <label className="text-xs text-gray-600 mb-1">Name</label>
-        <input
-          type="text"
-          placeholder="e.g. Leo"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="border rounded px-3 py-1.5 text-sm w-32"
-          required
-        />
-      </div>
-
-      <div className="flex flex-col">
-        <label className="text-xs text-gray-600 mb-1">Species</label>
-        <input
-          type="text"
-          placeholder="e.g. Lion"
-          value={species}
-          onChange={(e) => setSpecies(e.target.value)}
-          className="border rounded px-3 py-1.5 text-sm w-32"
-          required
-        />
-      </div>
-
-      <div className="flex flex-col">
-        <label className="text-xs text-gray-600 mb-1">Longitude</label>
-        <input
-          type="number"
-          step="0.0001"
-          value={longitude}
-          onChange={(e) => setLongitude(e.target.value)}
-          className="border rounded px-3 py-1.5 text-sm w-32"
-        />
-      </div>
-
-      <div className="flex flex-col">
-        <label className="text-xs text-gray-600 mb-1">Latitude</label>
-        <input
-          type="number"
-          step="0.0001"
-          value={latitude}
-          onChange={(e) => setLatitude(e.target.value)}
-          className="border rounded px-3 py-1.5 text-sm w-32"
-        />
-      </div>
-
-      <button
-        type="submit"
-        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 rounded text-sm"
-      >
-        + Add Animal
+    <form onSubmit={handleSubmit} style={{ display: 'flex', flexWrap: 'wrap', gap: 12, alignItems: 'flex-end' }}>
+      {[
+        { label: 'UNIT NAME', value: name, set: setName, type: 'text', placeholder: 'e.g. Leo', width: 130 },
+        { label: 'SPECIES',   value: species, set: setSpecies, type: 'text', placeholder: 'e.g. Lion', width: 130 },
+        { label: 'LONGITUDE', value: longitude, set: setLongitude, type: 'number', width: 120 },
+        { label: 'LATITUDE',  value: latitude,  set: setLatitude,  type: 'number', width: 120 },
+      ].map(({ label, value, set, type, placeholder, width }) => (
+        <div key={label} style={{ display: 'flex', flexDirection: 'column', width }}>
+          <label style={labelStyle}>{label}</label>
+          <input type={type} step={type === 'number' ? '0.0001' : undefined}
+            placeholder={placeholder} value={value}
+            onChange={e => set(e.target.value)}
+            style={inputStyle}
+            onFocus={e => e.target.style.borderColor = 'var(--accent)'}
+            onBlur={e => e.target.style.borderColor = 'var(--border)'}
+            required={type === 'text'} />
+        </div>
+      ))}
+      <button type="submit"
+        style={{ background: 'var(--accent)', border: 'none', color: '#0d0f12', fontFamily: 'var(--mono)', fontWeight: 700, fontSize: '0.72rem', letterSpacing: '0.1em', padding: '9px 20px', borderRadius: 3, cursor: 'pointer', alignSelf: 'flex-end' }}
+        onMouseOver={e => e.currentTarget.style.opacity = '0.85'}
+        onMouseOut={e => e.currentTarget.style.opacity = '1'}>
+        + REGISTER
       </button>
-
     </form>
   )
 }

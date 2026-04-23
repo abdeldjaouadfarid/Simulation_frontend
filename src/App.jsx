@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 
-// استيراد الأيقونات المطلوبة
 import { 
   Dog, 
   ShieldAlert, 
@@ -63,85 +62,81 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+  <div className="min-h-screen scanline" style={{ background: 'var(--bg)' }}>
 
-      {/* Header */}
-      <header className="bg-green-700 text-white px-6 py-4 shadow-lg">
-        <div className="flex items-center gap-3">
-          <Dog size={32} className="text-green-200" />
-          <div>
-            <h1 className="text-2xl font-bold">Animal Tracking Simulator</h1>
-            <div className="flex items-center gap-2 text-green-200 text-sm">
-              <Activity size={14} className="animate-pulse" />
-              <span>Live positions update every 1.5 seconds</span>
-            </div>
+    {/* Header */}
+    <header style={{ background: 'var(--surface)', borderBottom: '1px solid var(--border)' }}
+      className="px-8 py-4 flex items-center justify-between">
+      <div className="flex items-center gap-4">
+        <div style={{ background: 'var(--accent)', borderRadius: 2 }} className="p-2">
+          <Dog size={22} color="#0d0f12" />
+        </div>
+        <div>
+          <h1 style={{ fontFamily: 'var(--sans)', fontWeight: 900, letterSpacing: '0.05em', color: '#fff', fontSize: '1.1rem' }}>
+            ANIMAL TRACKING SYSTEM
+          </h1>
+          <div className="flex items-center gap-2" style={{ fontFamily: 'var(--mono)', fontSize: '0.7rem', color: 'var(--muted)' }}>
+            <Activity size={11} className="animate-pulse" style={{ color: 'var(--safe)' }} />
+            LIVE · UPDATE INTERVAL 1500ms
           </div>
         </div>
-      </header>
-
-      <main className="max-w-6xl mx-auto px-4 py-6 space-y-6">
-
-        {/* Geofence breach alerts */}
-        <AlertBox alerts={alerts} />
-
-        {/* Panic button section */}
-        <div className="bg-white rounded-lg shadow p-4 border-t-4 border-red-500">
-          <div className="flex items-center gap-2 mb-3 text-red-700">
-            <ShieldAlert size={20} />
-            <h2 className="text-lg font-semibold">Theft / Panic Mode</h2>
-          </div>
-          <PanicButton
-            isPanic={isPanic}
-            onActivate={handleActivatePanic}
-            onDeactivate={handleDeactivatePanic}
-          />
+      </div>
+      <div style={{ fontFamily: 'var(--mono)', fontSize: '0.7rem', color: 'var(--muted)', textAlign: 'right' }}>
+        <div style={{ color: isPanic ? 'var(--danger)' : 'var(--safe)', fontWeight: 700 }}>
+          {isPanic ? '⬤ PANIC ACTIVE' : '⬤ NOMINAL'}
         </div>
+        <div>{displayAnimals.length} UNITS TRACKED</div>
+      </div>
+    </header>
 
-        {/* Map */}
-        <div className="bg-white rounded-lg shadow p-4">
-          <div className="flex items-center gap-2 mb-3 text-gray-800">
-            <MapIcon size={20} />
-            <h2 className="text-lg font-semibold">Live Map</h2>
+    <main className="max-w-6xl mx-auto px-4 py-6 space-y-4">
+
+      <AlertBox alerts={alerts} />
+
+      {/* Panic strip */}
+      <div style={{ background: 'var(--surface)', border: `1px solid ${isPanic ? 'var(--danger)' : 'var(--border)'}`, borderRadius: 4 }}
+        className="px-5 py-4 flex items-center justify-between">
+        <div>
+          <div style={{ fontWeight: 700, letterSpacing: '0.1em', fontSize: '0.7rem', color: 'var(--muted)' }}>
+            EMERGENCY PROTOCOL
           </div>
-          <AnimalMap animals={displayAnimals} geofence={geofence} />
-
-          {/* Legend */}
-          <div className="flex flex-wrap gap-4 mt-4 text-xs font-medium text-gray-500 uppercase tracking-wider">
-            <span className="flex items-center gap-1">
-              <Circle size={12} fill="#22c55e" className="text-green-500" /> Safe
-            </span>
-            <span className="flex items-center gap-1">
-              <Circle size={12} fill="#ef4444" className="text-red-500" /> Outside zone
-            </span>
-            <span className="flex items-center gap-1">
-              <Circle size={12} fill="#f97316" className="text-orange-500" /> Stolen
-            </span>
-            <span className="text-green-700 border border-green-200 px-2 py-0.5 rounded bg-green-50">
-              Green polygon = safe zone
-            </span>
+          <div style={{ fontWeight: 600, color: isPanic ? 'var(--danger)' : 'var(--text)', fontSize: '1rem' }}>
+            Theft / Panic Mode
           </div>
         </div>
+        <PanicButton isPanic={isPanic} onActivate={handleActivatePanic} onDeactivate={handleDeactivatePanic} />
+      </div>
 
-        {/* Animal table */}
-        <div className="bg-white rounded-lg shadow p-4">
-          <div className="flex items-center gap-2 mb-3 text-gray-800">
-            <Database size={20} />
-            <h2 className="text-lg font-semibold">Animals Inventory</h2>
-          </div>
-          <AnimalTable
-            animals={displayAnimals}
-            onDelete={handleDeleteAnimal}
-          />
-
-          <div className="mt-6 border-t pt-4">
-            <h3 className="text-sm font-semibold text-gray-700 mb-3">Register New Animal</h3>
-            <AddAnimalForm onAdd={handleAddAnimal} />
+      {/* Map */}
+      <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 4 }} className="p-4">
+        <div className="flex items-center justify-between mb-3">
+          <div style={{ fontWeight: 700, letterSpacing: '0.1em', fontSize: '0.7rem', color: 'var(--muted)' }}>LIVE MAP</div>
+          <div className="flex gap-4" style={{ fontFamily: 'var(--mono)', fontSize: '0.65rem', color: 'var(--muted)' }}>
+            <span style={{ color: 'var(--safe)' }}>⬤ SAFE</span>
+            <span style={{ color: 'var(--danger)' }}>⬤ BREACH</span>
+            <span style={{ color: 'var(--accent)' }}>⬤ STOLEN</span>
           </div>
         </div>
+        <AnimalMap animals={displayAnimals} geofence={geofence} />
+      </div>
 
-      </main>
-    </div>
-  )
+      {/* Table */}
+      <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 4 }} className="p-4">
+        <div style={{ fontWeight: 700, letterSpacing: '0.1em', fontSize: '0.7rem', color: 'var(--muted)' }} className="mb-4">
+          UNIT REGISTRY
+        </div>
+        <AnimalTable animals={displayAnimals} onDelete={handleDeleteAnimal} />
+        <div style={{ borderTop: '1px solid var(--border)' }} className="mt-6 pt-5">
+          <div style={{ fontWeight: 700, letterSpacing: '0.1em', fontSize: '0.7rem', color: 'var(--muted)' }} className="mb-3">
+            REGISTER NEW UNIT
+          </div>
+          <AddAnimalForm onAdd={handleAddAnimal} />
+        </div>
+      </div>
+
+    </main>
+  </div>
+)
 }
 
 export default App
