@@ -8,8 +8,8 @@ function AddAnimalForm({ onAdd }) {
   // Store each form field in state
   const [name,      setName]      = useState('')
   const [species,   setSpecies]   = useState('')
-  const [longitude, setLongitude] = useState('-73.965')
-  const [latitude,  setLatitude]  = useState('40.781')
+  const [longitude, setLongitude] = useState('4.4300')
+  const [latitude,  setLatitude]  = useState('35.6600')
 
   const handleSubmit = (e) => {
     e.preventDefault() // stop the page from reloading
