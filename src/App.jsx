@@ -73,7 +73,7 @@ function App() {
         </div>
         <div>
           <h1 style={{ fontFamily: 'var(--sans)', fontWeight: 900, letterSpacing: '0.05em', color: '#fff', fontSize: '1.1rem' }}>
-            ANIMAL TRACKING SYSTEM
+            LOKA Simulation-(ESP32)
           </h1>
           <div className="flex items-center gap-2" style={{ fontFamily: 'var(--mono)', fontSize: '0.7rem', color: 'var(--muted)' }}>
             <Activity size={11} className="animate-pulse" style={{ color: 'var(--safe)' }} />
